@@ -5,6 +5,9 @@ from raspberry.models import GPIO_pins
 # Create your models here.
 
 class DeviceTypes(models.Model):
+    """
+    Device Types class that defines objects of each device type and its structure
+    """
     STYLES=(("primary","primary"),("info","info"),("success","success"),("danger","danger"),("warning","warning"))
     ICONS=[tuple((i,i)) for i in utils.get_nb_icons() ]
     name=models.CharField(max_length=255,blank=True, null=True)
@@ -12,6 +15,9 @@ class DeviceTypes(models.Model):
     style_type=models.CharField(choices=STYLES,max_length=255,blank=True, null=True)
 
     class Meta:
+        """
+        Ordering of device types by name
+        """
         verbose_name_plural = "DeviceTypes"
 
     def __str__(self):
@@ -20,6 +26,9 @@ class DeviceTypes(models.Model):
 
 
 class Device(models.Model):
+    """
+    Device class that defines objects of each device
+    """
     CHOICES=[tuple((i,i)) for i in utils.get_rooms() ]
     device_type=models.ForeignKey(DeviceTypes, on_delete=models.CASCADE,blank=True, null=True)
     room=models.CharField(choices=CHOICES,max_length=255,blank=True)
@@ -29,11 +38,17 @@ class Device(models.Model):
 
     @classmethod
     def get_room_by_id(cls,room_id):
+        """
+        Function that gets rooms belonging to a paticular part of the house
+        """
         data=utils.get_home_data()
         return data["rooms"][room_id]
 
     @classmethod
     def get_devices_by_id(cls,room_id):
+        """
+        Function that gets devices belonging to a paticular room by name
+        """
         data=utils.get_home_data()
         return cls.objects.filter(room=data["rooms"][room_id]['name']['text'])
         
@@ -42,6 +57,9 @@ class Device(models.Model):
         return "{}".format(self.name)
 
     class Meta:
+        """
+        Ordering of device types by name
+        """
         verbose_name_plural="Devices"
     
 

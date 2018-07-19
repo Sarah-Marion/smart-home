@@ -47,6 +47,9 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 class LoginUserView(APIView):
 
     def post(self, request, *args, **kwargs):
+        """
+        View function that lets a user post their inputted data
+        """
         username = request.data.get('email')
         password = request.data.get('password')
         print(request.data)
