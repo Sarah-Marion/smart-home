@@ -3,6 +3,9 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    UserSerializer class that returns complete object instances based on the validated data
+    """
     class Meta:
         model = User
         fields = ('username', 'email',)
